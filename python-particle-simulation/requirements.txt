@@ -1,0 +1,2 @@
+# Version used for the September 2026 portfolio checks.
+numpy==2.3.5

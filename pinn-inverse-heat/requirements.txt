@@ -1,0 +1,6 @@
+# Notebook runtime only. Original environment was not version-locked.
+numpy
+pandas
+matplotlib
+torch
+jupyterlab

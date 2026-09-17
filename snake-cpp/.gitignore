@@ -1,0 +1,9 @@
+build/
+snake
+snake.exe
+*.o
+*.obj
+*.dSYM/
+.idea/
+.vscode/
+.DS_Store

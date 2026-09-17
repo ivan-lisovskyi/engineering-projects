@@ -1,0 +1,16 @@
+{
+  "random_seed": 42,
+  "parameters": {
+    "num_particles": 8,
+    "k": 100.0,
+    "m": 1.0,
+    "timesteps": 100,
+    "boundary_min": 0.0,
+    "boundary_max": 1.0,
+    "radius": 0.04
+  },
+  "initial_positions": [
+    [0.2, 0.6], [0.4, 0.6], [0.6, 0.6], [0.8, 0.6],
+    [0.2, 0.8], [0.4, 0.8], [0.6, 0.8], [0.8, 0.8]
+  ]
+}

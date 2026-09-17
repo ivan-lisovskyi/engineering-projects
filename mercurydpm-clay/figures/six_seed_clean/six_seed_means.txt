@@ -1,0 +1,22 @@
+pH 3
+  lr_total: mean=-151.141, sd=1.7272
+  lr_delta: mean=-13.4645, sd=1.51278
+  kinetic: mean=0.00912916, sd=0.0189734
+  S_tensor: mean=0.694465, sd=0.163473
+  S_z: mean=-0.0234418, sd=0.432054
+  lambda_max: mean=0.79631, sd=0.108982
+  n_stacks: mean=9.33333, sd=1.50555
+  platelets_in_stacks: mean=24.5, sd=4.13521
+  largest_stack: mean=4.66667, sd=1.21106
+
+pH 10
+  lr_total: mean=40.5063, sd=0.78901
+  lr_delta: mean=-16.2488, sd=0.83745
+  kinetic: mean=0.000343359, sd=0.00037394
+  S_tensor: mean=0.678181, sd=0.24172
+  S_z: mean=-0.0963153, sd=0.292366
+  lambda_max: mean=0.785454, sd=0.161147
+  n_stacks: mean=0.666667, sd=1.21106
+  platelets_in_stacks: mean=1.33333, sd=2.42212
+  largest_stack: mean=0.666667, sd=1.0328
+

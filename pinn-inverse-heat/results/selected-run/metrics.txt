@@ -1,0 +1,4 @@
+alpha = 1.085367e-05 m^2/s
+alpha_error_pct = 8.537
+val_rmse_K = 0.395640
+boundary_model = left Dirichlet heating + right/top/bottom convection+radiation
