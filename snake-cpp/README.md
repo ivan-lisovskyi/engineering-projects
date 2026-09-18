@@ -1,10 +1,8 @@
 # Snake in C++
 
-A small Snake game made for a programming course. It runs in the terminal: move with WASD, collect fruit to grow the snake and avoid running into its tail. The board, snake and score are all drawn with text characters.
+We built this terminal version of Snake for a C++ programming course. Move with WASD, collect fruit and avoid the snake's tail. The board, snake and score are drawn with text characters.
 
-The project was made by Dmitrii Guselnikov and Ivan Lisovskyi. The original submission uses the spelling “Lisovskiy”. This is our shared coursework, not an individual project.
-
-The whole program is in [snake.cpp](snake.cpp). It is an early C++ project covering classes, terminal input, arrays and collision checks. The source is kept as submitted, including the issues listed below.
+The project was made by Dmitrii Guselnikov and Ivan Lisovskyi. The whole program is in [snake.cpp](snake.cpp), with a class for the game state and methods for drawing, keyboard input and movement.
 
 ## How it works
 
@@ -14,7 +12,7 @@ Keyboard input uses `termios` and `read`. Input is blocking, so the game takes a
 
 ## Build and run
 
-You need macOS or Linux, an interactive terminal and a compiler that supports C++11. The code uses `termios.h` and `unistd.h`; it will not build as a native Windows/MSVC program. WSL has not been tested.
+You need macOS or Linux, an interactive terminal and a C++11 compiler. The code uses `termios.h` and `unistd.h`; it is not a native Windows/MSVC program. WSL has not been tested.
 
 From this project's directory, build with Clang:
 
@@ -26,32 +24,23 @@ clang++ -std=c++11 -Wall -Wextra -pedantic snake.cpp -o build/snake
 Or use GCC:
 
 ```sh
+mkdir -p build
 g++ -std=c++11 -Wall -Wextra -pedantic snake.cpp -o build/snake
 ```
 
-The source compiled with Apple Clang on macOS on 17 September 2026. There were two warnings, about member-initialization order and partial `termios` initialization. This was a build check, not a gameplay test; the project has no automated tests.
-
-Read the limitations below before running the original program:
+The retained code has memory-handling bugs, listed below. To try it after reviewing those notes:
 
 ```sh
 ./build/snake
 ```
 
-Enter a single-word player name, then use the following keys. Both lower- and uppercase are accepted.
+Enter a single-word player name. Use **W/A/S/D** for up/left/down/right and **Q** to quit; lowercase keys work too.
 
-| Key | Action |
-|---|---|
-| W | Up |
-| A | Left |
-| S | Down |
-| D | Right |
-| Q | Quit |
-
-Other keys stop the snake's movement. Run the game in a real terminal, not through redirected input. If an interrupted game leaves your terminal behaving strangely, run `stty sane` in that terminal.
+Use only WASD and Q: other keys can end the game once the snake has a tail. Run it in a real terminal, not through redirected input. If an interrupted game leaves your terminal behaving strangely, run `stty sane` in that terminal.
 
 ## Known limitations
 
-The original program has several bugs that should be fixed before treating it as a finished game:
+The submitted version has a few unresolved bugs:
 
 - The tail arrays have room for 100 entries, but there is no check before adding another segment. A long game can access memory outside those arrays.
 - `UpdateGame()` can read tail coordinates before they are initialized. This is undefined behaviour.
@@ -59,10 +48,14 @@ The original program has several bugs that should be fixed before treating it as
 - The board coordinates and drawn walls do not always line up, so the border can hide a position.
 - Terminal settings are not fully saved and restored on every exit path.
 
-A next version should start with safe tail storage, initialized coordinates and corrected fruit placement. Separating the game rules from terminal input would also make them easier to test. These changes should be kept separate from the original submission.
+A next version should start with safe tail storage, initialized coordinates and corrected fruit placement. Separating the game rules from terminal input would also make them easier to test.
 
-## Attribution and reuse
+## Build check
+
+Compiled with Apple Clang on macOS on 17 September 2026, with warnings about member-initialization order and partial `termios` initialization. Gameplay was not retested, and there are no automated tests.
+
+## Credits
 
 The source credits a [GeeksforGeeks Snake example](https://www.geeksforgeeks.org/snake-code-cpp/) for the main approach and links to [the Open Group `termios.h` reference](https://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html). Its comments also record ChatGPT help with terminal input. These credits are kept in the code.
 
-The authors' names come from the original submission README. Student numbers and IDE files are not included. This README and `.gitignore` were added when preparing the project for GitHub. There is no new open-source licence; teammate permission and the terms for adapted code need to be checked before public redistribution.
+The code is unchanged from the submission. See the [project notes](../docs/PROJECT_NOTES.md) for details about this copy and reuse permissions.

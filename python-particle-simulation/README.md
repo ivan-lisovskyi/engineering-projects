@@ -1,8 +1,8 @@
 # 2D particle simulation in Python
 
-I wrote this small particle simulation for Programming in Engineering at the University of Twente. It follows particles moving in a 2D box under gravity and calculates a repulsive force when they overlap. The report was submitted in July 2024; [PIE2023.py](PIE2023.py) still has its original course filename.
+I wrote this particle simulation for Programming in Engineering at the University of Twente. Particles move in a 2D box under gravity and push apart when they overlap. I used NumPy to store their positions and velocities, and a velocity-Verlet loop to update them over time.
 
-The code puts a few mechanics ideas into practice: forces between particles, numerical time steps and boundary checks. NumPy holds the particle data, and a velocity-Verlet loop updates the positions and velocities. This is a learning project, separate from my later MercuryDPM thesis, rather than a validated DEM solver.
+This was an individual programming project, before my later work with MercuryDPM. The simulation is small enough to follow the force calculation and time-stepping loop in one file, [PIE2023.py](PIE2023.py).
 
 ## What I implemented
 
@@ -13,7 +13,7 @@ The code puts a few mechanics ideas into practice: forces between particles, num
 
 ## Quick start
 
-Run these commands from this project folder. The demo was checked with Python 3.12 and NumPy 2.3.5. The original submission did not specify dependency versions.
+The demo needs **Python 3.11 or later**. It was checked with Python 3.12 and NumPy 2.3.5. Run these commands from this project folder:
 
 ```bash
 python3 -m venv .venv
@@ -31,7 +31,7 @@ The demo runs eight particles for 100 steps and saves `outputs/demo/simulation_r
 python demo.py --output outputs/second-run
 ```
 
-The demo runner, its settings and the tests were added in September 2026 to make the saved project easier to try. They are not part of the original submission. The solver itself is unchanged. The demo starts with small, separated particles inside the box instead of the original random positions.
+The demo and tests were added in September 2026; the submitted solver is unchanged. The demo starts with small, separated particles inside the box instead of the original random positions.
 
 ## Model and implementation
 
@@ -60,15 +60,13 @@ Edit a copy of `demo.json`, then run `python demo.py --config path/to/config.jso
 | `initial_positions` | Explicit `[x, y]` positions for the reproducible demo |
 | `random_seed` | Fixes the original constructor's random initialisation before positions are replaced |
 
-The result file has blocks headed `Timestep`, followed by positions and velocities. There is a small but important detail in the original output: a label `s` is written after that step's update, so its physical time is `(s + 1) * dt`. The 100-step demo writes labels 0, 20, 40, 60 and 80. It does not save the final state.
+Output labels are step indices, not physical times. Each block lists positions and velocities after an update: label `s` corresponds to time `(s + 1) * dt`. The 100-step demo writes labels 0, 20, 40, 60 and 80, without saving the final state.
 
-The original entry point is also available:
+The original entry point uses random positions, 50 particles and 1,000 steps. Its default radius creates large overlaps, and it **overwrites `simulation_results.txt` in the current folder**. Use the demo above for a first run. To inspect the original behaviour:
 
 ```bash
 python PIE2023.py
 ```
-
-This uses random positions, 50 particles, 1,000 steps and the original large radius. It overwrites `simulation_results.txt` in the current folder. Use the demo for a first run: the original defaults cause the overlaps described below and are not a useful physical benchmark.
 
 ## Known limitations
 
@@ -78,7 +76,7 @@ This uses random positions, 50 particles, 1,000 steps and the original large rad
 - The original output loop fails with fewer than five steps, misses the final state and uses the step labels described above.
 - Input checks are incomplete. There has been no convergence study, energy-conservation study, experimental calibration or performance benchmark.
 
-The added tests check invalid settings, equal-and-opposite contact forces, a free-fall step, finite demo results and output labels. They help catch code changes that break these behaviours; they do not establish the physical accuracy of the model.
+All six added tests passed on 17 September 2026. They check invalid settings, equal-and-opposite contact forces, a free-fall step, finite demo results and output labels. These are code checks, not a validation of the physical model.
 
 ## Files
 
@@ -87,8 +85,8 @@ The added tests check invalid settings, equal-and-opposite contact forces, a fre
 - [tests/test_simulation.py](tests/test_simulation.py) — added tests, including the short-run limitation.
 - [requirements.txt](requirements.txt) — NumPy version used for the checks.
 
-The original report and university teaching materials are not included. This folder does not grant an open-source licence; publication and reuse permissions need to be checked separately.
+See the [project notes](../docs/PROJECT_NOTES.md) for the source history and reuse permissions.
 
 ## What could be improved
 
-The first changes should be better starting positions, correct output timestamps and wall handling that accounts for particle radius. After that, convergence and energy tests would help assess the numerical results. Keep revisions separate from the original submission, include a small example for each fix and run the tests above.
+The first changes would be better starting positions, correct output timestamps and walls that account for particle radius. Convergence and energy tests would then help assess the numerical results.

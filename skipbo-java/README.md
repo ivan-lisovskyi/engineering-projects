@@ -2,9 +2,9 @@
 
 This was a university team project: a Java version of Skip-Bo that runs in the terminal. You can play a local game against computer players or start a server and connect from separate terminals.
 
-There is more to the project than the card rules. The server has to check moves, keep each client's view of the game up to date and handle players taking turns. The code separates these jobs into the game model, network layer, message protocol and terminal display.
+The server checks moves, keeps the clients up to date and tracks whose turn it is. The code separates these jobs into the game model, network layer, message protocol and terminal display.
 
-I worked on this project as part of a team. This repository contains the shared code; the saved files do not give a reliable breakdown of who wrote each module.
+This is our shared team submission. The saved files do not show which person wrote each module.
 
 ## What the project contains
 
@@ -18,18 +18,7 @@ The computer player follows a set of move priorities; it does not use machine le
 
 ## Quick start: local game
 
-You need JDK 23 and Maven 3.8 or later, with `java` and `mvn` available in your terminal. The game itself uses only the JDK; the tests use JUnit. Maven needs internet access for its first build.
-
-From this project's directory:
-
-```sh
-mvn -DskipTests package
-java -cp target/classes controller.MainAdvanced 2 1
-```
-
-This starts a game with one human and one computer player, without opening a server. Follow the terminal prompts. The two arguments are the total number of players (2–6) and the number of human players (0 through the total). For example, `4 1` means one human and three computer players. Use a terminal that supports ANSI colours, and press Ctrl+C to stop.
-
-On macOS or Linux, you can also build and play without Maven:
+You need JDK 23, with `java` and `javac` available in your terminal. The game uses only the JDK; no other libraries are needed for local play. From this project folder on macOS or Linux:
 
 ```sh
 mkdir -p target/classes
@@ -37,41 +26,22 @@ find src/main/java -name '*.java' -print0 | xargs -0 javac --release 23 -encodin
 java -cp target/classes controller.MainAdvanced 2 1
 ```
 
-## Networked game
+This starts one human and one computer player, without opening a server. The arguments are total players (2–6) and human players (0 through the total). For example, `4 1` gives one human and three computer players. Follow the terminal prompts; use an ANSI-capable terminal for the board and Ctrl+C to stop.
 
-Use the network mode only on a trusted local network. The server listens on all network interfaces, even when the clients use `localhost`. It has no encrypted connection or account authentication, so do not expose it to the internet or set up port forwarding for it.
+### Maven build
 
-After building, open three terminals in this directory:
+With Maven 3.8 or later, you can build the same game with:
 
 ```sh
-# Terminal 1: two players, zero server-side bots
-java -cp target/classes networking.SkipBoServer 5555 2 0
-
-# Terminal 2
-java -cp target/classes networking.SkipBoClient localhost 5555 Alice 2
-
-# Terminal 3
-java -cp target/classes networking.SkipBoClient localhost 5555 Bob 2
+mvn -DskipTests package
+java -cp target/classes controller.MainAdvanced 2 1
 ```
 
-The server optionally accepts `--log`. The client accepts `--bot` for a rule-based client player. Stop the server with Ctrl+C after the session.
+Maven downloads build plugins and JUnit on its first run. This build file was added later and has not yet been tested through Maven; the JDK-only build above was checked.
 
-### Network client commands
+## Network play
 
-Indices are one-based. Build and discard pile numbers range from 1 to 4.
-
-| Command | Action |
-|---|---|
-| `s 1` | Play the stock's top card to build pile 1 |
-| `h 2 b 1` | Play hand card 2 to build pile 1 |
-| `h 2 d 3` | Discard hand card 2 to discard pile 3 and end the turn |
-| `d 3 b 1` | Play discard pile 3's top card to build pile 1 |
-| `table` / `hand` | Request current table/hand state |
-| `chat Hello` | Send a chat message |
-| `game 2` | Request a two-player game |
-| `help` / `quit` | Show commands / leave the client |
-
-These examples show the command format. The server still checks whether each move is allowed in the current game.
+The [network-play guide](docs/NETWORK_PLAY.md) covers starting a server, connecting clients and entering moves. Use it only on a trusted local network: the server listens on all interfaces, even when clients connect to `localhost`. It has no encryption or account authentication. Do not expose it to the internet or forward its port.
 
 ## Tests
 
@@ -87,7 +57,7 @@ The full suite includes `NetworkingTest`. It uses localhost clients, but its tes
 mvn test
 ```
 
-Checked on 17 September 2026: all 101 Java files compiled with OpenJDK 23.0.1, and 132 non-network tests passed with JUnit 5.9.1. The 22 socket tests were not rerun. Maven was not installed for this check, so compilation and testing used the local JDK and JUnit directly. The `pom.xml` was checked, but the Maven build still needs a full run.
+**Checked on 17 September 2026:** all 101 Java files compiled with OpenJDK 23.0.1, and 132 non-network tests passed using JUnit 5.9.1 directly. The 22 socket tests were not rerun.
 
 ## Where to look in the code
 
@@ -100,10 +70,8 @@ Checked on 17 September 2026: all 101 Java files compiled with OpenJDK 23.0.1, a
 | `src/main/java/controller` | Local-game entry point |
 | `src/test/java/tests` | JUnit tests and test helpers |
 
-## About this copy
+## Notes
 
-The Java source and tests are unchanged from the saved project. They have been placed in Maven's usual folder structure, with a new `pom.xml`, README and `.gitignore` to make the project easier to run. IDE files, compiled files, course handouts and student records are not included.
+The Java source and tests are unchanged; the Maven layout and build file were added for this copy. Skip-Bo is a commercial game, and this student project is not affiliated with Mattel. See the [project notes](../docs/PROJECT_NOTES.md) for credits and reuse permissions.
 
-Skip-Bo is a commercial game. This student project is not affiliated with Mattel and includes no Mattel artwork. The team code has no new open-source licence. Permission from teammates and any course restrictions need to be checked before making it public or redistributing it.
-
-Useful next changes would be a server option that accepts connections only from the same computer, and network tests that use that option. Keep any changes in separate commits from the original code, and add a test for the behaviour being changed.
+A useful next improvement would be a server option that accepts connections only from the same computer, with tests using that option.
