@@ -22,4 +22,4 @@ The [Python particle demo](python-particle-simulation/#quick-start) is a small e
 
 ## About the collection
 
-Some projects are individual work; others are shared team submissions or build on existing software. Credits are included with each project. The repository is private while permissions for team code, coursework and data are checked. See the [project notes](docs/PROJECT_NOTES.md) for details about the original files, later additions and reuse.
+Some projects are individual work; others are shared team submissions or build on existing software. Credits are included with each project. I share this collection as a portfolio of my university work. See the [project notes](docs/PROJECT_NOTES.md) for details about the original files, later additions and reuse.

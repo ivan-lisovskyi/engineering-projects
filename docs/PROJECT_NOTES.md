@@ -22,10 +22,10 @@ Personal documents, student records, course handouts, third-party research paper
 
 This collection has no single open-source licence. Existing copyright notices and source credits remain in place.
 
-- **MercuryDPM:** the driver retains the [upstream licence](../mercurydpm-clay/LICENSE-MercuryDPM.txt). This does not give new rights to all thesis material or dependencies. Relevant thesis/publication permissions still need checking.
-- **PINN:** the input is a COMSOL-exported dataset. The creator of the underlying model and permission to publish its data have not been confirmed. The `.mph` model is not included.
-- **Skip-Bo:** this is shared team code. Teammate permission and any course restrictions need checking. It is not affiliated with Mattel and contains no Mattel artwork.
-- **Python particle simulation:** no open-source licence has been added. Any course publication conditions still apply.
-- **Snake:** this was a two-person project adapted from an external example. Teammate permission and the terms for the adapted code need checking. The original source links and recorded assistance are listed in its README.
+- **MercuryDPM:** the driver retains the [upstream licence](../mercurydpm-clay/LICENSE-MercuryDPM.txt). Other thesis material and dependencies retain their own rights and terms.
+- **PINN:** the input is a COMSOL-exported dataset. The `.mph` model is not included. The dataset is provided as input for this coursework example, not as an independently validated experimental dataset.
+- **Skip-Bo:** this is shared team code. It is not affiliated with Mattel and contains no Mattel artwork.
+- **Python particle simulation:** this is my individual coursework. No open-source licence has been added.
+- **Snake:** this was a two-person project adapted from an external example. The original source links and recorded assistance are listed in its README. Public access does not change the terms that apply to that example.
 
-For these reasons the repository remains private. Making it public, or sharing it with an employer, should follow the relevant permission checks.
+I confirmed permission to publish the included coursework, shared code and data on 21 September 2026. This collection is available for portfolio review. It does not grant a blanket licence to reuse third-party code, data or project material.
