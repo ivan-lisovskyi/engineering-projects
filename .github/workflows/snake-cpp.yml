@@ -1,0 +1,34 @@
+name: snake-cpp
+
+on:
+  push:
+    paths:
+      - "snake-cpp/**"
+      - ".github/workflows/snake-cpp.yml"
+  pull_request:
+    paths:
+      - "snake-cpp/**"
+      - ".github/workflows/snake-cpp.yml"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    defaults:
+      run:
+        working-directory: snake-cpp
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile with g++
+        run: |
+          mkdir -p build
+          g++ -std=c++11 -Wall -Wextra -pedantic snake.cpp -o build/snake
+      - name: Compile with clang++
+        run: |
+          mkdir -p build
+          clang++ -std=c++11 -Wall -Wextra -pedantic snake.cpp -o build/snake-clang
+      - name: Smoke test (start, enter name, quit with Q under a pty)
+        run: python3 smoke_test.py build/snake
