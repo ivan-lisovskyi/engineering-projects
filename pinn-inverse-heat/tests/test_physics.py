@@ -5,24 +5,12 @@ import pytest
 import torch
 import torch.nn as nn
 
+from helpers import ExactMode
 from pinn.config import Config
 from pinn.model import PINN, to_hat
 from pinn.physics import left_bc_u, pde_residual, robin_bc_residual
 
 DT64 = torch.float64
-
-
-class ExactMode(nn.Module):
-    """u(xhat, yhat, that) for the exact solution exp(-lam t) sin(pi x/Lx) sin(pi y/Ly)."""
-
-    def __init__(self, cfg, alpha):
-        super().__init__()
-        self.t_max = cfg.t_max
-        self.lam = alpha * math.pi**2 * (1 / cfg.lx**2 + 1 / cfg.ly**2)
-
-    def forward(self, h):
-        xh, yh, th = h[:, 0:1], h[:, 1:2], h[:, 2:3]
-        return torch.exp(-self.lam * self.t_max * th) * torch.sin(math.pi * xh) * torch.sin(math.pi * yh)
 
 
 class Linear(nn.Module):
@@ -120,7 +108,7 @@ def test_robin_residual_matches_a_hand_computed_energy_balance(side, axis, hat_v
     coord = torch.tensor([0.4 * (cfg.ly if side == "right" else cfg.lx)], dtype=DT64)
     t = torch.tensor([50.0], dtype=DT64)
     res = robin_bc_residual(Linear(axis, c), torch.tensor(alpha, dtype=DT64), side, coord, t, cfg)
-    assert float(res) == pytest.approx(expected, rel=1e-9)
+    assert float(res.detach()) == pytest.approx(expected, rel=1e-9)
 
 
 def test_robin_residual_rejects_unknown_side():
@@ -136,9 +124,9 @@ def test_model_shapes_and_positive_alpha(tiny_cfg):
     assert h.shape == (5, 3)
     assert float(h.max()) <= 1.0 and float(h.min()) >= 0.0
     assert model(h).shape == (5, 1)
-    assert float(model.alpha()) == pytest.approx(tiny_cfg.alpha_init, rel=1e-5)
+    assert float(model.alpha().detach()) == pytest.approx(tiny_cfg.alpha_init, rel=1e-5)
     model.log_alpha.data.fill_(-50.0)
-    assert float(model.alpha()) > 0.0
+    assert float(model.alpha().detach()) > 0.0
 
 
 def test_fourier_matrices_are_buffers_not_parameters(tiny_cfg):

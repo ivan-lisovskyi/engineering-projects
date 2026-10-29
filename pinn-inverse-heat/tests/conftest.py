@@ -3,9 +3,9 @@ import os
 
 os.environ.setdefault("MPLBACKEND", "Agg")  # no display needed
 
-import numpy as np
 import pytest
 
+from helpers import make_synthetic_table
 from pinn.config import Config
 
 
@@ -26,24 +26,6 @@ def tiny_cfg():
         val_batch=200,
         device="cpu",
     )
-
-
-def make_synthetic_table(cfg, n_t=21, nx=6, ny=4, alpha=None):
-    """Synthetic sensor data from an exact solution of the heat equation.
-
-    u = exp(-lambda t) sin(pi x/Lx) sin(pi y/Ly) with lambda = alpha*pi^2*(1/Lx^2 + 1/Ly^2).
-    This is NOT the COMSOL set-up (the plate starts hot and the sides stay at ambient);
-    it is only a tiny, fully known table to exercise the code.
-    """
-    alpha = cfg.alpha_true if alpha is None else alpha
-    lam = alpha * np.pi**2 * (1 / cfg.lx**2 + 1 / cfg.ly**2)
-    t = np.linspace(0.0, cfg.t_max, n_t, dtype=np.float32)
-    xs = np.linspace(0.1 * cfg.lx, 0.9 * cfg.lx, nx, dtype=np.float32)
-    ys = np.linspace(0.1 * cfg.ly, 0.9 * cfg.ly, ny, dtype=np.float32)
-    x, y = np.meshgrid(xs, ys)
-    x, y = x.ravel(), y.ravel()
-    u = np.exp(-lam * t)[:, None] * (np.sin(np.pi * x / cfg.lx) * np.sin(np.pi * y / cfg.ly))[None, :]
-    return t, x, y, (cfg.t0 + cfg.d_t * u).astype(np.float32)
 
 
 @pytest.fixture
