@@ -49,7 +49,7 @@ def main():
         raise SystemExit('Refusing to overwrite a different sensors_T.csv; move it first.')
     with target.open('xb') as handle:
         handle.write(data)
-    print('Prepared sensors_T.csv. Open final_notebook.ipynb from this folder.')
+    print('Prepared sensors_T.csv. Run `python -m pinn train --epochs 50` or open a notebook from notebooks/.')
 
 
 if __name__ == '__main__':

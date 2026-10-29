@@ -65,3 +65,37 @@ def test_markdown_table_formats_columns():
     assert lines[0].startswith("| variant |") and lines[1].startswith("|---")
     assert len(lines) == 2 + 3
     assert all(line.count("|") == lines[0].count("|") for line in lines)
+
+
+def _short_exp(value):
+    mantissa, exponent = f"{value:.3e}".split("e")
+    return f"{mantissa}e{int(exponent)}"
+
+
+def test_readme_tables_agree_with_the_saved_files():
+    """Every number in the README's results tables is the committed value, rounded."""
+    readme = (PROJECT / "README.md").read_text().splitlines()
+    saved = load_saved_results(PROJECT)
+
+    for row in saved["alpha_sensitivity"].itertuples():
+        lines = [ln for ln in readme if ln.startswith("|") and f"| {_short_exp(row.alpha)} |" in ln]
+        assert len(lines) == 1, row
+        assert f"{row.alpha_error_pct:.1f}%" in lines[0] and f"{row.val_rmse_K:.3f}" in lines[0]
+
+    labels = {"baseline (plain MLP)": "plain MLP", "bigger MLP": "bigger MLP", "Fourier features": "Fourier features"}
+    for row in architecture_summary(saved["comparison"]).itertuples():
+        lines = [ln for ln in readme if ln.startswith(f"| {labels[row.variant]} |")]
+        assert len(lines) == 1, row
+        expected = [
+            f"{row.mean_rmse_K:.3f}",
+            f"{row.std_rmse_K:.3f}",
+            f"{row.mean_alpha_error_pct:.1f}%",
+            f"{row.best_alpha_error_pct:.1f}%",
+            f"{row.min_alpha_x1e5:.2f} – {row.max_alpha_x1e5:.2f}",
+        ]
+        assert all(text in lines[0] for text in expected), (row, lines[0])
+
+    selected = saved["selected_run"]
+    text = "\n".join(readme)
+    assert f"`{selected['alpha_error_pct']:.3f}%`" in text
+    assert f"`{selected['val_rmse_K']:.6f} K`" in text

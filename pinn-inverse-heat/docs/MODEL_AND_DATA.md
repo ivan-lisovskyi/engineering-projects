@@ -29,22 +29,25 @@ Sensor IDs are shuffled with seed 0: 112 sensors are used for training and 28 ar
 
 ## Configuration
 
-The first code cell contains `ALPHA_INIT`, loss weights, Fourier-feature settings, batch sizes, `SEED`, and `STAGE1` / `STAGE2`. The known reference `ALPHA_TRUE = 1e-5 m²/s` is used to report errors and make plots, not as a target in the training loss.
+The first code cell of the original notebook contains `ALPHA_INIT`, loss weights, Fourier-feature settings, batch sizes, `SEED`, and `STAGE1` / `STAGE2`. The package keeps the same values as the fields of `pinn.config.Config` (`alpha_init`, `w_bc`, `n_ff`, `data_batch`, `seed`, `stage1`, `stage2`, ...). The known reference `ALPHA_TRUE = 1e-5 m²/s` (`Config.alpha_true`) is used to report errors and make plots, not as a target in the training loss.
 
-The default schedule is 2,000 fixed-diffusivity epochs followed by 6,000 joint-training epochs. Hardware, dependency versions and random samples can affect both runtime and results. Dependencies are listed but not version-locked. No network connection is needed once they are installed.
+The default schedule is 2,000 fixed-diffusivity epochs followed by 6,000 joint-training epochs. `python -m pinn train --epochs N` runs `N` epochs in total, split in the same 1:3 ratio. Hardware, dependency versions and random samples can affect both runtime and results. `requirements.txt` pins the versions used for the tests and the 50-epoch smoke run; the saved results were produced before the versions were recorded. No network connection is needed once the dependencies are installed.
 
 ## Files and outputs
 
 | Path | Contents |
 |---|---|
-| [`final_notebook.ipynb`](../final_notebook.ipynb) | Model, training code, explanations and academic references |
+| [`notebooks/final_notebook.ipynb`](../notebooks/final_notebook.ipynb) | Original notebook, unchanged: model, training code, explanations and academic references |
+| [`notebooks/pinn_walkthrough.ipynb`](../notebooks/pinn_walkthrough.ipynb) | Thin notebook that calls the package |
+| [`src/pinn/`](../src/pinn/) | Package extracted from the notebook: model, physics, training, plots, results tables, command line |
+| [`tests/`](../tests/) | Tests on exact fields and a tiny synthetic case, plus the package-versus-notebook equivalence check |
 | [`sensors_T.csv.xz`](../sensors_T.csv.xz) | Complete compressed dataset |
 | [`prepare_data.py`](../prepare_data.py) | Dataset checks and unpacking |
-| [`requirements.txt`](../requirements.txt) | Notebook dependencies |
+| [`requirements.txt`](../requirements.txt), [`requirements-dev.txt`](../requirements-dev.txt) | Pinned dependencies; the second adds pytest |
 | [`results/selected-run/`](../results/selected-run/) | Saved metrics, history and plots |
 | [`outputs_alpha_sensitivity/alpha_sensitivity_summary.csv`](../outputs_alpha_sensitivity/alpha_sensitivity_summary.csv) | Six saved starting-value experiments |
 | [`outputs_comparison/comparison_table.csv`](../outputs_comparison/comparison_table.csv) | Twelve saved architecture-comparison runs |
 
-A new run writes history, metrics, a PyTorch checkpoint and plots to `outputs_submission/`, which is ignored by Git. It does not overwrite `results/selected-run/`.
+A new notebook run writes history, metrics, a PyTorch checkpoint and plots to `outputs_submission/`; `python -m pinn train` writes the same kinds of files to `outputs_cli/` (its `metrics.txt` adds the epochs, seed and device). Both folders are ignored by Git, and the command line refuses to write into `results/`. Neither overwrites `results/selected-run/`.
 
-Section 8 reads and plots the existing sensitivity and architecture CSVs. Running that section does not repeat those experiments. The notebook's contour plots clip temperature rise to `0–30 K`; inspect the numerical output as well as the pictures.
+Section 8 of the original notebook reads and plots the existing sensitivity and architecture CSVs, and `python -m pinn results` prints the same tables. Neither repeats those experiments. The notebook's contour plots clip temperature rise to `0–30 K`; inspect the numerical output as well as the pictures.
