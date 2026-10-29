@@ -18,7 +18,7 @@ The temperatures come from virtual sensors in a COMSOL simulation, not laborator
 
 The notebook's code now also lives in a small package, `src/pinn/`, with a command line, tests and a thin notebook. The code was moved, not redesigned: a test runs the original notebook's own cells and checks that the package gives the same loss history and trained weights. The original notebook is kept unchanged in `notebooks/final_notebook.ipynb`.
 
-AI assistance: code scaffolding; the PINN notebook, training setup, validation and analysis by me.
+AI assistance: the `src/pinn` package, its tests, the command line, the thin notebook, the CI workflow and the October 2026 README sections were written with Claude Code as a re-packaging of the notebook's code (the equivalence test checks that it behaves the same). The PINN notebook itself — model, training setup, validation and analysis — is my own coursework.
 
 ## Quick start
 
@@ -80,7 +80,7 @@ Network comparison ([`comparison_table.csv`](outputs_comparison/comparison_table
 | bigger MLP | 0.613 | 0.174 | 23.8% | 3.1% | 0.56 – 1.25 |
 | Fourier features | 0.433 | 0.096 | 20.1% | 2.2% | 0.63 – 1.24 |
 
-With four runs per variant these are rough summaries. The Fourier-feature variant has the lowest mean temperature error, but the recovered `alpha` still spans roughly a factor of two for every variant. The selected run above does not appear in either table; its `history.csv` starts from `1.5e-5`, yet its numbers (8.5%, 0.396 K) differ from the 1.5e-5 row of the first table (12.3%, 0.183 K), and the saved files do not explain the difference.
+With four runs per variant these are rough summaries. The Fourier-feature variant has the lowest mean temperature error, but the recovered `alpha` still spans roughly a factor of two for every variant. The selected run above is a separate training run of the final notebook, not one of the six sweep runs. It started from the same `1.5e-5` but ended at 8.5% / 0.396 K against the sweep's 12.3% / 0.183 K — an example of the run-to-run variation; the saved files do not record what else differed (seed, device, package versions).
 
 These are saved project results, not a fresh training run. Exact package versions were not recorded for them, and the current notebook may not reproduce every saved value exactly.
 
