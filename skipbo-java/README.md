@@ -79,7 +79,7 @@ The GitHub Actions workflow [`.github/workflows/skipbo-java.yml`](../.github/wor
 ## Limitations / what I would do next
 
 - The server supports one active game room, has no encryption or authentication, and listens on all interfaces (see Network play).
-- The computer player follows fixed move priorities; it is not a strong or adaptive opponent.
+- The computer player follows fixed move priorities; it does not use machine learning.
 - The saved files do not show who wrote which module.
 - Next: a server option that accepts connections only from the same computer, with tests using that option.
 
