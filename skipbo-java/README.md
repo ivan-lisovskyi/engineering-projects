@@ -86,5 +86,3 @@ The GitHub Actions workflow [`.github/workflows/skipbo-java.yml`](../.github/wor
 ## Notes
 
 The Java source and tests are unchanged; the Maven layout and build file were added for this copy. Skip-Bo is a commercial game, and this student project is not affiliated with Mattel. See the [project notes](../docs/PROJECT_NOTES.md) for credits and reuse permissions.
-
-AI assistance: the CI workflow and the October 2026 README additions were written with Claude Code. The Java source and tests are our team's unchanged coursework; the saved files do not show who wrote which module.

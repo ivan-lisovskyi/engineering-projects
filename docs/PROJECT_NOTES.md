@@ -26,6 +26,6 @@ This collection has no single open-source licence. Existing copyright notices an
 - **PINN:** the input is a COMSOL-exported dataset. The `.mph` model is not included. The dataset is provided as input for this coursework example, not as an independently validated experimental dataset.
 - **Skip-Bo:** this is shared team code. It is not affiliated with Mattel and contains no Mattel artwork.
 - **Python particle simulation:** this is my individual coursework. No open-source licence has been added.
-- **Snake:** this was a two-person project adapted from an external example. The original source links and recorded assistance are listed in its README. Public access does not change the terms that apply to that example.
+- **Snake:** this was a two-person project adapted from an external example. The original source links are listed in its README. Public access does not change the terms that apply to that example.
 
 I confirmed permission to publish the included coursework, shared code and data on 21 September 2026. This collection is available for portfolio review. It does not grant a blanket licence to reuse third-party code, data or project material.

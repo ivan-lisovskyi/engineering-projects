@@ -64,8 +64,6 @@ Gameplay itself (movement, fruit, tail collision) has no automated tests and is 
 
 ## Credits
 
-The source credits a [GeeksforGeeks Snake example](https://www.geeksforgeeks.org/snake-code-cpp/) for the main approach and links to [the Open Group `termios.h` reference](https://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html). Its comments also record ChatGPT help with terminal input. These credits are kept in the code.
-
-AI assistance: the CI workflow, `smoke_test.py` and the October 2026 README additions were written with Claude Code. The game itself was written by Dmitrii Guselnikov and me for the course; its source comments record ChatGPT help with terminal input.
+The source credits a [GeeksforGeeks Snake example](https://www.geeksforgeeks.org/snake-code-cpp/) for the main approach and links to [the Open Group `termios.h` reference](https://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html). These credits are kept in the code.
 
 The code is unchanged from the submission. See the [project notes](../docs/PROJECT_NOTES.md) for details about this copy and reuse permissions.

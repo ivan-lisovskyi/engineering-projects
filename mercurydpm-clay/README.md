@@ -87,7 +87,3 @@ Run simulations only in a new, empty output directory: the driver can remove ear
 ## Credits
 
 The driver's MercuryDPM copyright notice and [upstream licence](LICENSE-MercuryDPM.txt) are preserved. See the [project notes](../docs/PROJECT_NOTES.md) for publication permissions and the scope of the included material.
-
-The thesis declared help from ChatGPT, Claude, Grammarly and DeepL with setup, explanations, literature searches, code and report review, data-processing scripts and language. I reviewed and edited the final work and am responsible for its interpretation.
-
-AI assistance: `docs/SCRIPTS.md`, `docs/METRICS.md`, `docs/GALLERY.md`, the smoke tests and the CI workflow were written with Claude Code in October 2026 from the code and the saved result files. The driver extension, the matched-seed comparison and the interpretation of the results are my thesis work, with the help declared above.

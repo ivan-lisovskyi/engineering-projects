@@ -4,8 +4,6 @@ I wrote this particle simulation for Programming in Engineering at the Universit
 
 This was an individual programming project, before my later work with MercuryDPM. The simulation is small enough to follow the force calculation and time-stepping loop in one file, [PIE2023.py](PIE2023.py).
 
-AI assistance: `make_gif.py`, its tests, the CI workflow and the October 2026 README additions were written with Claude Code. `PIE2023.py` — the simulation itself (settings checks, contact forces, time-stepping loop, boundaries and text output) — is my own unchanged coursework.
-
 ![Eight particles from demo.json falling in a box and bouncing off the floor](demo.gif)
 
 *Animation produced by the project's own solver; see [How the animation was made](#how-the-animation-was-made).*

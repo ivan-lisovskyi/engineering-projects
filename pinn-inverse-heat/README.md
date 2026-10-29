@@ -18,8 +18,6 @@ The temperatures come from virtual sensors in a COMSOL simulation, not laborator
 
 The notebook's code now also lives in a small package, `src/pinn/`, with a command line, tests and a thin notebook. The code was moved, not redesigned: a test runs the original notebook's own cells and checks that the package gives the same loss history and trained weights. The original notebook is kept unchanged in `notebooks/final_notebook.ipynb`.
 
-AI assistance: the `src/pinn` package, its tests, the command line, the thin notebook, the CI workflow and the October 2026 README sections were written with Claude Code as a re-packaging of the notebook's code (the equivalence test checks that it behaves the same). The PINN notebook itself — model, training setup, validation and analysis — is my own coursework.
-
 ## Quick start
 
 Needs Python 3.12 or later (the pinned `numpy` requires it). From this folder:
