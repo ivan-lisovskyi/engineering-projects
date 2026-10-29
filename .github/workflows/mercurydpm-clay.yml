@@ -1,0 +1,42 @@
+name: mercurydpm-clay
+
+# What can genuinely run in CI: the Python side only. The C++ driver needs a
+# MercuryDPM + Clump + PVFMM checkout, MPI and OpenMP, none of which are in this
+# repository, so it is not built here. The raw-run analysis scripts need the
+# original ~/MercuryRuns data and are only syntax-checked.
+on:
+  push:
+    paths:
+      - "mercurydpm-clay/**"
+      - ".github/workflows/mercurydpm-clay.yml"
+  pull_request:
+    paths:
+      - "mercurydpm-clay/**"
+      - ".github/workflows/mercurydpm-clay.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  python-checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mercurydpm-clay
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: mercurydpm-clay/requirements-dev.txt
+      - name: Install pinned dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Byte-compile all four scripts
+        run: python -m py_compile scripts/plot_charge_templates.py scripts/plot_ph3_ph10_six_seed_clean.py scripts/stacking_analysis.py scripts/initial_overlap_check.py
+      - name: Run the source-template plot (needs no raw runs)
+        run: |
+          python scripts/plot_charge_templates.py --out-dir "$RUNNER_TEMP/clay-plots"
+          ls -l "$RUNNER_TEMP/clay-plots"
+      - name: Run the checks
+        run: python -m pytest -q
