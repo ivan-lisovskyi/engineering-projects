@@ -59,6 +59,12 @@ mvn test
 
 **Checked on 17 September 2026:** all 101 Java files compiled with OpenJDK 23.0.1, and 132 non-network tests passed using JUnit 5.9.1 directly. The 22 socket tests were not rerun.
 
+**Checked again on 28 October 2026 (without Maven):** the sources and tests compiled with `javac --release 23` on OpenJDK 23.0.1, and the JUnit 5.9.1 console launcher ran all 154 tests: 154 passed, 0 failed, 0 skipped (132 without `NetworkingTest`; the full run, including its 22 socket tests, took about 70 seconds).
+
+### Continuous integration
+
+The GitHub Actions workflow [`.github/workflows/skipbo-java.yml`](../.github/workflows/skipbo-java.yml) runs `mvn -B verify` in this folder with Temurin JDK 23, on pushes and pull requests that touch `skipbo-java/`. That includes the socket tests, which bind to localhost on the CI runner.
+
 ## Where to look in the code
 
 | Directory | Responsibility |
@@ -70,8 +76,15 @@ mvn test
 | `src/main/java/controller` | Local-game entry point |
 | `src/test/java/tests` | JUnit tests and test helpers |
 
+## Limitations / what I would do next
+
+- The server supports one active game room, has no encryption or authentication, and listens on all interfaces (see Network play).
+- The computer player follows fixed move priorities; it is not a strong or adaptive opponent.
+- The saved files do not show who wrote which module.
+- Next: a server option that accepts connections only from the same computer, with tests using that option.
+
 ## Notes
 
 The Java source and tests are unchanged; the Maven layout and build file were added for this copy. Skip-Bo is a commercial game, and this student project is not affiliated with Mattel. See the [project notes](../docs/PROJECT_NOTES.md) for credits and reuse permissions.
 
-A useful next improvement would be a server option that accepts connections only from the same computer, with tests using that option.
+AI assistance: code scaffolding; my share of the team's Java coursework code (the saved files do not show which modules) by me.
