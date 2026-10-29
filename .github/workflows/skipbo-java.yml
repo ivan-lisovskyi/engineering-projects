@@ -1,0 +1,27 @@
+name: skipbo-java
+
+on:
+  push:
+    paths:
+      - 'skipbo-java/**'
+      - '.github/workflows/skipbo-java.yml'
+  pull_request:
+    paths:
+      - 'skipbo-java/**'
+      - '.github/workflows/skipbo-java.yml'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: skipbo-java
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '23'
+          cache: maven
+          cache-dependency-path: skipbo-java/pom.xml
+      - run: mvn -B verify
