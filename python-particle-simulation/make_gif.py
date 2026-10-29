@@ -1,4 +1,4 @@
-"""Render an animated GIF from the real solver output (added September 2026).
+"""Render an animated GIF from the real solver output (added October 2026).
 
 Runs the unchanged ParticleSimulation from PIE2023.py, starting from the same
 fixture as demo.py (demo.json), and records the particle positions after every

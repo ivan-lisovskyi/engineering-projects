@@ -4,7 +4,7 @@ I wrote this particle simulation for Programming in Engineering at the Universit
 
 This was an individual programming project, before my later work with MercuryDPM. The simulation is small enough to follow the force calculation and time-stepping loop in one file, [PIE2023.py](PIE2023.py).
 
-AI assistance: code scaffolding; the simulation in PIE2023.py (settings checks, contact forces, time-stepping loop, boundaries and text output) by me.
+AI assistance: `make_gif.py`, its tests, the CI workflow and the October 2026 README additions were written with Claude Code. `PIE2023.py` — the simulation itself (settings checks, contact forces, time-stepping loop, boundaries and text output) — is my own unchanged coursework.
 
 ![Eight particles from demo.json falling in a box and bouncing off the floor](demo.gif)
 
@@ -97,7 +97,7 @@ python PIE2023.py
 - The original output loop fails with fewer than five steps, misses the final state and uses the step labels described above.
 - Input checks are incomplete. There has been no convergence study, energy-conservation study, experimental calibration or performance benchmark.
 
-Six tests were added and passed on 17 September 2026; the frame-recording tests for `make_gif.py` were added afterwards (10 tests in total). They check invalid settings, equal-and-opposite contact forces, a free-fall step, finite demo results and output labels. These are code checks, not a validation of the physical model.
+Six tests were added and passed on 17 September 2026; the frame-recording tests for `make_gif.py` were added in October 2026 (10 tests in total). They check invalid settings, equal-and-opposite contact forces, a free-fall step, finite demo results and output labels. These are code checks, not a validation of the physical model.
 
 ## Files
 
