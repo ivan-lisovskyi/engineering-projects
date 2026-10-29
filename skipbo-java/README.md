@@ -37,7 +37,7 @@ mvn -DskipTests package
 java -cp target/classes controller.MainAdvanced 2 1
 ```
 
-Maven downloads build plugins and JUnit on its first run. This build file was added later and has not yet been tested through Maven; the JDK-only build above was checked.
+Maven downloads build plugins and JUnit on its first run. This build file was added for this copy; the CI workflow runs it (`mvn -B verify`, see Continuous integration), and the JDK-only build above was checked locally.
 
 ## Network play
 
@@ -63,7 +63,7 @@ mvn test
 
 ### Continuous integration
 
-The GitHub Actions workflow [`.github/workflows/skipbo-java.yml`](../.github/workflows/skipbo-java.yml) runs `mvn -B verify` in this folder with Temurin JDK 23, on pushes and pull requests that touch `skipbo-java/`. That includes the socket tests, which bind to localhost on the CI runner.
+The GitHub Actions workflow [`.github/workflows/skipbo-java.yml`](../.github/workflows/skipbo-java.yml) runs `mvn -B verify` in this folder with Temurin JDK 23, on pushes and pull requests that touch `skipbo-java/`. That includes the 22 socket tests of `NetworkingTest`.
 
 ## Where to look in the code
 
@@ -87,4 +87,4 @@ The GitHub Actions workflow [`.github/workflows/skipbo-java.yml`](../.github/wor
 
 The Java source and tests are unchanged; the Maven layout and build file were added for this copy. Skip-Bo is a commercial game, and this student project is not affiliated with Mattel. See the [project notes](../docs/PROJECT_NOTES.md) for credits and reuse permissions.
 
-AI assistance: code scaffolding; my share of the team's Java coursework code (the saved files do not show which modules) by me.
+AI assistance: the CI workflow and the October 2026 README additions were written with Claude Code. The Java source and tests are our team's unchanged coursework; the saved files do not show who wrote which module.
