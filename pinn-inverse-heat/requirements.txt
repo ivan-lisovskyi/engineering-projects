@@ -1,6 +1,9 @@
-# Notebook runtime only. Original environment was not version-locked.
-numpy
-pandas
-matplotlib
-torch
-jupyterlab
+# Pinned to the versions the tests, the 50-epoch smoke run and the notebook run were executed with
+# (Python 3.12; macOS arm64 locally, Linux x86_64 with the CPU build of torch in CI).
+# Only the packages imported directly are pinned; their own dependencies are not.
+# The saved results in results/ predate this pinning: their package versions were not recorded.
+numpy==2.5.4
+pandas==3.1.0
+matplotlib==3.11.2
+torch==2.15.0
+jupyterlab==4.6.4

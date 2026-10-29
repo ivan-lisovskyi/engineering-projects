@@ -10,3 +10,7 @@ __pycache__/
 *.pth
 /sensors_T.csv
 /outputs_submission/
+.pytest_cache/
+*.egg-info/
+/outputs_cli/
+/final_notebook.ipynb
