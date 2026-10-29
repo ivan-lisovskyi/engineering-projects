@@ -7,7 +7,7 @@ name = "pinn-inverse-heat"
 version = "0.1.0"
 description = "Inverse heat-transfer PINN: estimate thermal diffusivity from sparse sensor data"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 # Exact tested versions are pinned in requirements.txt.
 dependencies = ["numpy", "pandas", "matplotlib", "torch"]
 
