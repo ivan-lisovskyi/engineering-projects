@@ -90,4 +90,4 @@ The driver's MercuryDPM copyright notice and [upstream licence](LICENSE-MercuryD
 
 The thesis declared help from ChatGPT, Claude, Grammarly and DeepL with setup, explanations, literature searches, code and report review, data-processing scripts and language. I reviewed and edited the final work and am responsible for its interpretation.
 
-AI assistance: code scaffolding; the extension of the MercuryDPM driver, the comparison of matched seeds and the interpretation of the results by me.
+AI assistance: `docs/SCRIPTS.md`, `docs/METRICS.md`, `docs/GALLERY.md`, the smoke tests and the CI workflow were written with Claude Code in October 2026 from the code and the saved result files. The driver extension, the matched-seed comparison and the interpretation of the results are my thesis work, with the help declared above.

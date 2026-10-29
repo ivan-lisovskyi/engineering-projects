@@ -82,9 +82,8 @@ def test_metrics_page_cites_code_locations(project):
 
 def test_readme_has_exactly_one_ai_assistance_line(project):
     lines = _text(project, "README.md").splitlines()
-    ai = [ln for ln in lines if ln.startswith("AI assistance: code scaffolding;")]
+    ai = [ln for ln in lines if ln.startswith("AI assistance:")]
     assert len(ai) == 1
-    assert ai[0].endswith(" by me.")
 
 
 def test_licence_and_credit_text_untouched(project):
