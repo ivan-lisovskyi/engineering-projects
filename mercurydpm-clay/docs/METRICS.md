@@ -36,7 +36,7 @@ the raw value per site (`cpp` 492-499) is:
 | -1 (bottom layer interior) | `lambda3*(+0.20) + lambda10*(-0.20)` | 0.20 - 0.40 t |
 | 0 (outer ring, both layers) | `lambda3*(+0.06) + lambda10*(-0.06)` | 0.06 - 0.12 t |
 
-`template` lines 30-35 give the same three expressions under the names "Silica-like face", "Alumina-like face" and "Edge". The C++ driver itself only says top / bottom / edge (a search for "silica" and "alumina" in `cpp` finds nothing), so the pairing top = silica-like and bottom = alumina-like rests on the identical constants, not on a statement in the driver.
+`template` lines 30-35 give the same three expressions under the names "Silica-like face", "Alumina-like face" and "Edge". The C++ driver itself only says top / bottom / edge (a search for "silica" and "alumina" in `cpp` finds nothing), so the pairing top = silica-like and bottom = alumina-like rests on the identical constants, not on a statement in the driver. The thesis (Table 3.2) lists -0.22 as the silica-like value and +0.20 / -0.20 as the alumina-like endpoints, so the pairing follows the thesis.
 
 For the periodic solver the mean is subtracted (`cpp` 518-521, `PERIODIC` only):
 
