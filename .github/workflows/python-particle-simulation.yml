@@ -1,0 +1,25 @@
+name: python-particle-simulation
+
+on:
+  push:
+    paths:
+      - "python-particle-simulation/**"
+      - ".github/workflows/python-particle-simulation.yml"
+  pull_request:
+    paths:
+      - "python-particle-simulation/**"
+      - ".github/workflows/python-particle-simulation.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python-particle-simulation
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pytest -q

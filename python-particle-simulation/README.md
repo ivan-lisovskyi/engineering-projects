@@ -4,6 +4,12 @@ I wrote this particle simulation for Programming in Engineering at the Universit
 
 This was an individual programming project, before my later work with MercuryDPM. The simulation is small enough to follow the force calculation and time-stepping loop in one file, [PIE2023.py](PIE2023.py).
 
+AI assistance: `make_gif.py`, its tests, the CI workflow and the October 2026 README additions were written with Claude Code. `PIE2023.py` — the simulation itself (settings checks, contact forces, time-stepping loop, boundaries and text output) — is my own unchanged coursework.
+
+![Eight particles from demo.json falling in a box and bouncing off the floor](demo.gif)
+
+*Animation produced by the project's own solver; see [How the animation was made](#how-the-animation-was-made).*
+
 ## What I implemented
 
 - A `SimulationConfig` class to store and check the main settings.
@@ -31,7 +37,22 @@ The demo runs eight particles for 100 steps and saves `outputs/demo/simulation_r
 python demo.py --output outputs/second-run
 ```
 
+To run the tests on their own: `python -m pytest -q` (pytest is pinned in `requirements.txt`; `python -m unittest discover -s tests -v` also works). GitHub Actions runs `python -m pip install -r requirements.txt` and `python -m pytest -q` for every change to this folder.
+
 The demo and tests were added in September 2026; the submitted solver is unchanged. The demo starts with small, separated particles inside the box instead of the original random positions.
+
+## How the animation was made
+
+[demo.gif](demo.gif) is rendered from the real solver output, not drawn by hand. [make_gif.py](make_gif.py) loads the same fixture as the demo (`demo.json`: 8 particles, `k = 100`, `m = 1`, `radius = 0.04`, box `[0, 1]`, `dt = 0.001`), runs the unchanged `ParticleSimulation.velocityVerlet()` and records the particle positions at step 0 and after every 10th step. Pillow then draws each state as a 400 x 400 pixel frame (circle radius = the contact radius, 40 ms per frame, 16 colours).
+
+Settings that differ from the demo: the GIF runs **1000 steps (t = 1.0 s, 101 frames)** instead of the demo's 100 steps, because in 100 steps (0.1 s) the particles fall only about 0.05 and barely move. Only `timesteps` is overridden (`--steps`); all other settings come from `demo.json`. Each particle is drawn as a circle of its contact radius, so a particle whose centre has been clipped to a wall overlaps the wall line (see the wall limitation below).
+
+```bash
+python -m pip install -r requirements-gif.txt   # adds Pillow 13.0.0
+python make_gif.py --output demo.gif            # defaults: --steps 1000 --every 10
+```
+
+The frame-recording logic has its own tests ([tests/test_make_gif.py](tests/test_make_gif.py)); the drawing step is not tested beyond the file being produced. The committed GIF is 211,005 bytes (about 206 KB) and was generated with Python 3.12, NumPy 2.3.5 and Pillow 13.0.0; running the script again with these versions gave a byte-identical file.
 
 ## Model and implementation
 
@@ -76,14 +97,16 @@ python PIE2023.py
 - The original output loop fails with fewer than five steps, misses the final state and uses the step labels described above.
 - Input checks are incomplete. There has been no convergence study, energy-conservation study, experimental calibration or performance benchmark.
 
-All six added tests passed on 17 September 2026. They check invalid settings, equal-and-opposite contact forces, a free-fall step, finite demo results and output labels. These are code checks, not a validation of the physical model.
+Six tests were added and passed on 17 September 2026; the frame-recording tests for `make_gif.py` were added in October 2026 (10 tests in total). They check invalid settings, equal-and-opposite contact forces, a free-fall step, finite demo results and output labels. These are code checks, not a validation of the physical model.
 
 ## Files
 
 - [PIE2023.py](PIE2023.py) — original simulation code, unchanged.
 - [demo.py](demo.py) and [demo.json](demo.json) — added runner and starting conditions for the small demo.
-- [tests/test_simulation.py](tests/test_simulation.py) — added tests, including the short-run limitation.
-- [requirements.txt](requirements.txt) — NumPy version used for the checks.
+- [tests/test_simulation.py](tests/test_simulation.py) — added tests, including the short-run limitation; [tests/test_make_gif.py](tests/test_make_gif.py) tests the frame recording.
+- [make_gif.py](make_gif.py) and [demo.gif](demo.gif) — added script that renders the animation from the solver, and its output.
+- [requirements.txt](requirements.txt) — NumPy and pytest versions used for the checks; [requirements-gif.txt](requirements-gif.txt) adds Pillow for `make_gif.py`.
+- [../.github/workflows/python-particle-simulation.yml](../.github/workflows/python-particle-simulation.yml) — CI: installs `requirements.txt` and runs `python -m pytest -q`.
 
 See the [project notes](../docs/PROJECT_NOTES.md) for the source history and reuse permissions.
 
