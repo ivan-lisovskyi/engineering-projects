@@ -9,8 +9,7 @@ from helpers import make_synthetic_table
 from pinn.config import Config
 
 
-@pytest.fixture
-def tiny_cfg():
+def tiny_config():
     """Small network and small batches so a whole training run takes a second or two."""
     return Config(
         width=16,
@@ -26,6 +25,11 @@ def tiny_cfg():
         val_batch=200,
         device="cpu",
     )
+
+
+@pytest.fixture
+def tiny_cfg():
+    return tiny_config()
 
 
 @pytest.fixture
