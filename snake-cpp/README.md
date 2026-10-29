@@ -52,10 +52,20 @@ A next version should start with safe tail storage, initialized coordinates and 
 
 ## Build check
 
-Compiled with Apple Clang on macOS on 17 September 2026, with warnings about member-initialization order and partial `termios` initialization. Gameplay was not retested, and there are no automated tests.
+Compiled with Apple Clang on macOS on 17 September 2026, with warnings about member-initialization order and partial `termios` initialization. Gameplay was not retested.
+
+A GitHub Actions workflow (`.github/workflows/snake-cpp.yml`) compiles `snake.cpp` with the commands above on `ubuntu-latest` and `macos-latest`, then runs `smoke_test.py`. The smoke test starts the game in a pseudo-terminal, enters a name, presses `q` and checks that the score line appeared and the program exited with status 0. To run it locally after building:
+
+```sh
+python3 smoke_test.py build/snake
+```
+
+Gameplay itself (movement, fruit, tail collision) has no automated tests and is checked by hand only.
 
 ## Credits
 
 The source credits a [GeeksforGeeks Snake example](https://www.geeksforgeeks.org/snake-code-cpp/) for the main approach and links to [the Open Group `termios.h` reference](https://pubs.opengroup.org/onlinepubs/7908799/xsh/termios.h.html). Its comments also record ChatGPT help with terminal input. These credits are kept in the code.
+
+AI assistance: the CI workflow, `smoke_test.py` and the October 2026 README additions were written with Claude Code. The game itself was written by Dmitrii Guselnikov and me for the course; its source comments record ChatGPT help with terminal input.
 
 The code is unchanged from the submission. See the [project notes](../docs/PROJECT_NOTES.md) for details about this copy and reuse permissions.
