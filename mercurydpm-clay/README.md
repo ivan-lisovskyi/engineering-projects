@@ -40,6 +40,8 @@ Contact response is frictionless and normal-only. Initial overlaps were allowed 
 
 Long-range energy includes a within-clump baseline that differs between templates. I compared changes from each run's first saved state; absolute totals should not be read as thermodynamic free energies. These results describe the simulated cases, not a general finding about real clay.
 
+More figures with captions and numbers are in the [figure gallery](docs/GALLERY.md). The [fabric-metric formulas page](docs/METRICS.md) derives each metric from the code, and [`docs/SCRIPTS.md`](docs/SCRIPTS.md) lists every Python script's inputs and outputs.
+
 ## Try the source-template plot
 
 This example needs Python 3.10 or later, but no simulation build or large raw data files. From this folder:
@@ -57,16 +59,35 @@ The command creates PNG, PDF and SVG files named `charge_template_raw_and_correc
 
 The plot command was checked with Python 3.12 and Matplotlib 3.10.9. The full C++ build and simulations were not rerun when preparing this repository.
 
+### Checks
+
+`scripts/requirements.txt` pins the tested versions (Matplotlib 3.10.9, NumPy 2.2.6). The checks byte-compile all four scripts, run the plot command above into a temporary folder and compare the documentation's numbers with the saved result files:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+```
+
+GitHub Actions runs the same commands ([workflow](../.github/workflows/mercurydpm-clay.yml)). It does not build the C++ driver, which needs MercuryDPM, PVFMM, MPI and OpenMP, and it does not run the three scripts that read the raw runs.
+
 ## Build and full analysis
 
 The C++ driver needs a compatible MercuryDPM/Clump/PVFMM checkout, MPI and OpenMP. The full Python analysis needs the original raw runs, which are not included here. See the [build and analysis guide](docs/RUNNING.md) for dependencies, arguments and data paths.
 
 Run simulations only in a new, empty output directory: the driver can remove earlier output files. The overlap-analysis script can also overwrite an included summary; the guide explains where to change its output path.
 
-Further work would include recording a complete build environment, testing the geometry calculations, adding seeds and comparing against physical data.
+## Limitations and what I would do next
+
+- The C++ driver and the raw-run analysis are not exercised by any automated check; the raw runs and their several gigabytes of output are not included.
+- The raw-data location is fixed to `~/MercuryRuns` in the scripts, with no command-line option.
+- The grouping rule counts nearby, similarly oriented platelets, not confirmed contacts, and its counts depend on the thresholds (see the sensitivity table).
+- The build environment was not fully recorded, so [RUNNING.md](docs/RUNNING.md) is an outline, not a tested clean-install recipe.
+- Further work would include recording a complete build environment, testing the geometry calculations, adding seeds and comparing against physical data.
 
 ## Credits
 
 The driver's MercuryDPM copyright notice and [upstream licence](LICENSE-MercuryDPM.txt) are preserved. See the [project notes](../docs/PROJECT_NOTES.md) for publication permissions and the scope of the included material.
 
 The thesis declared help from ChatGPT, Claude, Grammarly and DeepL with setup, explanations, literature searches, code and report review, data-processing scripts and language. I reviewed and edited the final work and am responsible for its interpretation.
+
+AI assistance: code scaffolding; the extension of the MercuryDPM driver, the comparison of matched seeds and the interpretation of the results by me.
